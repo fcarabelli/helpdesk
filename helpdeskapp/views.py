@@ -4,22 +4,22 @@ from helpdeskapp.forms import QuestionForm
 
 
 def addQuestion(request):
-    # Creamos un formulario vacío
+    # We create an empty form
     form = QuestionForm()
 
-    # Comprobamos si se ha enviado el formulario
+    # We check if the form has been sent
     if request.method == "POST":
         # Añadimos los datos recibidos al formulario
         form = QuestionForm(request.POST)
-        # Si el formulario es válido...
+        # If the form is valid ...
         if form.is_valid():
-            # Guardamos el formulario pero sin confirmarlo,
-            # así conseguiremos una instancia para manejarla
+            # We save the form but without confirming it,
+            # so we will get an instance to handle it
             instancia = form.save(commit=False)
-            # Podemos guardarla cuando queramos
+            # We can save it whenever we want
             instancia.save()
-            # Después de guardar redireccionamos a la lista
+            # After saving we redirect to the list
             return redirect('/')
 
-    # Si llegamos al final renderizamos el formulario
+    # If we reach the end we render the form
     return render(request, "helpdeskapp/addQuestion.html", {'form': form})
