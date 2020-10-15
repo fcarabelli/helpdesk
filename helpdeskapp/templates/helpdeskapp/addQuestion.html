@@ -1,5 +1,13 @@
+{% load bootstrap4 %}
+
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='full' %}
+
 <form method="POST">
-    {{ form.as_p }}
+
     {% csrf_token %}
+    {% bootstrap_form form %}
+    {% buttons %}
     <button type="submit">Crear</button>
+    {% endbuttons %}
 </form>
