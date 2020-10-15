@@ -3,7 +3,6 @@ from django.test import TestCase
 
 from helpdeskapp.models import Question
 
-from helpdeskapp.models import Question
 
 
 class QuestionTestCase(TestCase):
