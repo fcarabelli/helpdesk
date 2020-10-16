@@ -7,5 +7,5 @@ class QuestionForm(ModelForm):
     captcha = CaptchaField()
     class Meta:
         model = Question
-        fields = ['subject','message','urgency']
+        fields = ['subject','message','urgency','email']
         #fields = ['question_text', 'question_datetime']
