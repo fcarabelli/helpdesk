@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'helpdeskapp.apps.HelpDeskConfig',
+    'helpdeskapp.apps.HelpdeskappConfig',
+    'session',
 ]
 
 MIDDLEWARE = [
@@ -84,6 +85,7 @@ DATABASES = {
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
+AUTH_USER_MODEL = 'session.User'
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -100,13 +102,17 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTHENTICATION_BACKENDS = (
+    'session.backends.UserEmailModelBackend',
+    'django.contrib.auth.backends.ModelBackend',
+)
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
 LANGUAGE_CODE = 'es-ar'
 
-TIME_ZONE = 'America/Buenos Aires'
+TIME_ZONE = 'America/Argentina/Buenos_Aires'
 
 USE_I18N = True
 

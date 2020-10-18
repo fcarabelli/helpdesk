@@ -1,0 +1,16 @@
+{% if messages %}
+    <ul>
+        {% for message in messages %}
+            <li>{{message}}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+{% if user.is_authenticated %}
+ <p>{{user}} | <a href="{% url 'logout' %}">Cerrar sesión</a> </p>
+{% else %}
+<form method="post">
+    {% csrf_token %}
+    {{form}}
+    <button type="submit">Inciar sesión</button>
+</form>
+{% endif %}
