@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'helpdeskapp.apps.HelpdeskappConfig',
     'session',
+    'bootstrap4',
 ]
 
 MIDDLEWARE = [

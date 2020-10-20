@@ -5,4 +5,5 @@ helpdesk-env
 db.sqlite3
 /static
 .DS_Store
-/venv/
+/venv
+/.idea

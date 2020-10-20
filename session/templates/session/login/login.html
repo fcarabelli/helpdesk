@@ -1,3 +1,6 @@
+{% load bootstrap4 %}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='full' %}
 {% if messages %}
     <ul>
         {% for message in messages %}
@@ -8,9 +11,9 @@
 {% if user.is_authenticated %}
  <p>{{user}} | <a href="{% url 'logout' %}">Cerrar sesión</a> </p>
 {% else %}
-<form method="post">
+<form method="post" class="form-inline">
     {% csrf_token %}
-    {{form}}
-    <button type="submit">Inciar sesión</button>
+    {{ form }}
+    <button type="submit" class="btn btn-primary">Inciar sesión</button>
 </form>
 {% endif %}
