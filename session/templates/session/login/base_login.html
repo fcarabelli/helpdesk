@@ -1,0 +1,28 @@
+{% extends 'session\base.html' %}
+{% block base_login %}
+<nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+        {% if user.is_authenticated %}
+            <ul class="navbar-nav">
+                <li class="nav-item"><h5>Hola {{user.first_name}} {{user.last_name}}!</h5></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Cerrar sesión</a></li>
+                <li><a class="nav-link" href="{% url 'addQuestion' %}">Formular pregunta</a></li>
+            </ul>
+        {% else %}
+        <form method="post" class="form-inline">
+            {% csrf_token %}
+            <div class="form-group">
+                {{ form.user_email }}
+            </div>
+            <div class="form-group">
+                {{ form.password }}
+            </div>
+            <button type="submit" class="btn btn-primary">Inciar sesión</button>
+        </form>
+        {% endif %}
+    </div>
+</nav>
+{% endblock %}
