@@ -1,0 +1,45 @@
+{% extends 'session\base.html' %}
+{% block base_login %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'session/style.css' %}">
+    <script src="{% static 'session/js/login.js' %}"></script>
+    <nav class="navbar sticky-top navbar-expand-lg pb-5 mb-5">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+            {% if user.is_authenticated %}
+                <ul class="navbar-nav mr-auto">
+                    <li><a class="nav-link" href="{% url 'addQuestion' %}">Formular pregunta</a></li>
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item"><h5 style="color: white">Hola {{user.first_name}} {{user.last_name}}!</h5></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Cerrar sesión</a></li>
+                </ul>
+            {% else %}
+            <form method="post" class="form ml-auto">
+                {% csrf_token %}
+                <div class="form-row">
+                    <div class="col">
+                        {{ form.user_email }}
+                    </div>
+                    <div class="col">
+                        {{ form.password }}
+                    </div>
+                    <div class="col">
+                        <button type="submit" class="btn btn-primary">Inciar sesión</button>
+                    </div>
+                </div>
+                <div class="form-row errorlist">
+                    {{ form.user_email.errors|striptags}}
+                    {% if messages %}
+                        {% for message in messages %}
+                            {{ message }}
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </form>
+            {% endif %}
+        </div>
+    </nav>
+{% endblock %}

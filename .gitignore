@@ -3,7 +3,6 @@
 __pycache__
 helpdesk-env
 db.sqlite3
-/static
 .DS_Store
 /venv
 /.idea

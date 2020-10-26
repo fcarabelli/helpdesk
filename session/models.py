@@ -26,6 +26,5 @@ class User(AbstractUser):
         user.set_password(password)
         user.save(self._db)
 
-
     def __str__(self):
         return self.email
