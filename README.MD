@@ -65,23 +65,22 @@ manage.py runserver
 
 There are 2 apps actually:
 
-helpdeskapp
+* helpdeskapp
 
-session
+* session
 
 ###Helpdeskapp
 
-
 This application registers the questions of the users.
-
-
 Questions are made through the AddQuestion form.
+
+###
 
 ###Session
 
-
-
 It is responsible for recording the activity of authenticated users
+
+###
 
 ##
 
