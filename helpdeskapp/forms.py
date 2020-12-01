@@ -1,5 +1,5 @@
 from captcha.fields import CaptchaField
-from django.forms import ModelForm
+from django.forms import ModelForm,modelformset_factory
 from .models import Question
 
 
@@ -16,6 +16,13 @@ class QuestionForm(ModelForm):
             'email': 'mail del solicitante',
             'phone_number': 'celular'
         }
-        #fields = ['question_text', 'question_datetime']
-        
+
+    def __init__(self, user, *args, **kwargs):
+        self.user = user
+        super().__init__(*args, **kwargs)
+
+    def clean_email(self):
+        data = self.cleaned_data['email']
+        # encrypt stuff
+        return data
 
