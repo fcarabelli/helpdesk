@@ -17,12 +17,15 @@ class QuestionForm(ModelForm):
             'phone_number': 'celular'
         }
 
-    def __init__(self, user, *args, **kwargs):
-        self.user = user
-        super().__init__(*args, **kwargs)
+class AuthQuestionForm(ModelForm):
+    captcha = CaptchaField()
+    class Meta:
+        model = Question
+        fields = ['subject','message']
+        labels = {
+            'subject': 'Asunto',
+            'message': 'Mensaje',
+        }
 
-    def clean_email(self):
-        data = self.cleaned_data['email']
-        # encrypt stuff
-        return data
-
+QuestionFormSet = modelformset_factory(model = Question,form= QuestionForm, fields = ('email','phone_number','subject','message'))
+AuthQuestionFormSet = modelformset_factory(model = Question,form= QuestionForm, fields = ('subject','message'))
