@@ -1,12 +1,9 @@
 from django.shortcuts import render, redirect
-from django.forms import modelformset_factory
 
-from helpdesk.settings import MAILGUN_API_KEY, MAILGUN_ADDRESS, EMAIL_HOST_USER
-from helpdeskapp.forms import QuestionForm,AuthQuestionForm
-from helpdeskapp.models import Question
+
+from helpdesk.settings import EMAIL_HOST_USER
+from helpdeskapp.forms import QuestionForm, AuthQuestionForm
 from django.core.mail import send_mail
-
-import requests
 
 
 def addQuestion(request):
@@ -15,7 +12,6 @@ def addQuestion(request):
         form = QuestionForm()
     else:
         form = AuthQuestionForm()
-
     # We check if the form has been sent
     if request.method == "POST":
         # Añadimos los datos recibidos al formulario
@@ -29,7 +25,7 @@ def addQuestion(request):
             # so we will get an instance to handle it
             instancia = form.save(commit=False)
 
-            if isinstance(form,AuthQuestionForm):
+            if isinstance(form, AuthQuestionForm):
                 instancia.email = request.user.email
                 instancia.phone_number = request.user.cellphone or 0
 
@@ -55,5 +51,3 @@ def send_simple_message(request):
         body = request.POST['message']
 
     return send_mail(subject, body, EMAIL_HOST_USER, [mail_to])
-
-
