@@ -1,9 +1,12 @@
+from datetime import datetime
+
+
 from django.shortcuts import render, redirect
 
 
 from helpdesk.settings import EMAIL_HOST_USER
 from helpdeskapp.forms import QuestionForm, AuthQuestionForm
-from django.core.mail import send_mail
+from django.core.mail import send_mail, EmailMessage
 
 
 def addQuestion(request):
@@ -31,7 +34,7 @@ def addQuestion(request):
 
             # We can save it whenever we want
             instancia.save()
-            print(send_simple_message(request))
+            print(send_html_message(request))
             # After saving we redirect to the list
             return redirect('/')
 
@@ -44,10 +47,22 @@ def send_simple_message(request):
         mail_to = request.POST['email']
         subject = request.POST['subject']
         body = request.POST['message']
-
     else:
         mail_to = request.user.email
         subject = request.POST['subject']
         body = request.POST['message']
-
     return send_mail(subject, body, EMAIL_HOST_USER, [mail_to])
+
+def send_html_message(request):
+    if request.user.is_anonymous:
+        mail_to = request.POST['email']
+        subject = request.POST['subject']
+        body = request.POST['message']
+    else:
+        mail_to = request.user.email
+        subject = request.POST['subject']
+        body = request.POST['message']
+    body = f'<body><h1>Sistema de mesa de ayuda FRM UTN</h1><br><h2>Su consulta está siendo procesada</h2><h3> Datos de la solicitud</h3><br><p>Solicitante: {mail_to}</p><br><p>{subject}</p><br><p>Consulta realizada: {body}</p><br><p>Fecha y Hora de la solicitud:{datetime.now().isoformat()}</p></body>'
+    msg = EmailMessage(subject, body, EMAIL_HOST_USER, [mail_to])
+    msg.content_subtype = "html"
+    return msg.send()
