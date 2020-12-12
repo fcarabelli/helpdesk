@@ -5,7 +5,7 @@ docker rmi helpdesk_web
 
 docker-compose up
 
-docker-compose exec web python manage.py collectstatic
+docker-compose exec web python manage.py collectstatic --noinput
 
 docker-compose exec web python manage.py migrate
 
