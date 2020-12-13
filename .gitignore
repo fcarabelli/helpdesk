@@ -1,0 +1,9 @@
+*.pyc
+*~
+__pycache__
+helpdesk-env
+db.sqlite3
+.DS_Store
+/venv
+/.idea
+/helpdesk/.env
