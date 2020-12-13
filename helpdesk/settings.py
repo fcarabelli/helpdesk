@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+import dj_database_url.config
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 from django.template.context_processors import static
@@ -24,12 +25,14 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config("SECRET_KEY")
+#SECRET_KEY = config("SECRET_KEY")
+SECRET_KEY = os.environ.get('SECRET_KEY')
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1','localhost','nameofapp.herokuapp.com']
 
 
 # Application definition
@@ -86,14 +89,23 @@ WSGI_APPLICATION = 'helpdesk.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': config('DB_ENGINE'),
-        'NAME': config('DB_NAME'),
-        'USER': config('DB_USER'),
-        'PASSWORD': config('DB_PASSWORD'),
-        'HOST': config('DB_HOST'),
-        'PORT': config('DB_PORT'),
+        #'ENGINE': config('DB_ENGINE'),
+        'ENGINE': os.environ('DB_ENGINE'),
+        #'NAME': config('DB_NAME'),
+        'NAME': os.environ('DB_NAME'),
+        #'USER': config('DB_USER'),
+        'USER': os.environ('DB_USER'),
+        #'PASSWORD': config('DB_PASSWORD'),
+        'PASSWORD': os.environ('DB_PASSWORD'),
+        #'HOST': config('DB_HOST'),
+        'HOST': os.environ('DB_HOST'),
+        #'PORT': config('DB_PORT'),
+        'PORT': os.environ('DB_PORT'),
     }
 }
+
+db_from_env = dj_database_url.config(conn_max_age=600)
+DATABASES['default'].update(db_from_env)
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -142,13 +154,19 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 
-EMAIL_BACKEND = config('EMAIL_BACKEND')
-EMAIL_HOST = config('EMAIL_HOST')
-EMAIL_USE_TLS = config('EMAIL_USE_TLS')
-EMAIL_PORT = config('EMAIL_PORT')
-EMAIL_HOST_USER = config('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+#EMAIL_BACKEND = config('EMAIL_BACKEND')
+EMAIL_BACKEND = os.environ.get('EMAIL_BACKEND')
+#EMAIL_HOST = config('EMAIL_HOST')
+EMAIL_HOST = os.environ.get('EMAIL_HOST')
+#EMAIL_USE_TLS = config('EMAIL_USE_TLS')
+EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS')
+#EMAIL_PORT = config('EMAIL_PORT')
+EMAIL_PORT = os.environ.get('EMAIL_PORT')
+#EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+#EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 
 
-
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
