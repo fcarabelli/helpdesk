@@ -89,9 +89,9 @@ WSGI_APPLICATION = 'helpdesk.wsgi.application'
 
 
 
-Based on the stacktrace you are receiving, it looks like blog is not in your settings file. Check settings.py, under INSTALLED_APPS and add a new entry for 'blog'.
+#Based on the stacktrace you are receiving, it looks like blog is not in your settings file. Check settings.py, under INSTALLED_APPS and add a new entry for 'blog'.
 
-As far as setting up the database in the latest version of Django, You should have a look at this page from the django settings documentation. According to it, the current style for the DATABASE setting is as follows.
+#As far as setting up the database in the latest version of Django, You should have a look at this page from the django settings documentation. According to it, the current style for the DATABASE setting is as follows.
 
 DATABASES = {
     'default': {
