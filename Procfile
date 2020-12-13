@@ -1,0 +1,1 @@
+web: gunicorn helpdesk.wsgi --log-file -
