@@ -87,22 +87,21 @@ WSGI_APPLICATION = 'helpdesk.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
+
+
+Based on the stacktrace you are receiving, it looks like blog is not in your settings file. Check settings.py, under INSTALLED_APPS and add a new entry for 'blog'.
+
+As far as setting up the database in the latest version of Django, You should have a look at this page from the django settings documentation. According to it, the current style for the DATABASE setting is as follows.
+
 DATABASES = {
     'default': {
-        #'ENGINE': config('DB_ENGINE'),
-        'ENGINE': os.environ('DB_ENGINE'),
-        #'NAME': config('DB_NAME'),
-        'NAME': os.environ('DB_NAME'),
-        #'USER': config('DB_USER'),
-        'USER': os.environ('DB_USER'),
-        #'PASSWORD': config('DB_PASSWORD'),
-        'PASSWORD': os.environ('DB_PASSWORD'),
-        #'HOST': config('DB_HOST'),
-        'HOST': os.environ('DB_HOST'),
-        #'PORT': config('DB_PORT'),
-        'PORT': os.environ('DB_PORT'),
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'mydatabase', # This is where you put the name of the db file. 
+                 # If one doesn't exist, it will be created at migration time.
     }
 }
+
+
 
 db_from_env = dj_database_url.config(conn_max_age=600)
 DATABASES['default'].update(db_from_env)
