@@ -1,14 +1,8 @@
-## Docker 
-docker-compose down
+## Heroku
 
-docker rmi helpdesk_web
-
-docker-compose up
-
-docker-compose exec web python manage.py collectstatic --noinput
-
-docker-compose exec web python manage.py migrate
-
-docker-compose exec web python manage.py createsuperuser
+Added dependencies to requirements.txt: gunicorn whitenoise dj-database-url psycopg2.
+Added Procfile for config server.  
+Environment variables as config vars in heroku.
+Configured heroku branch for automatic deploy.
 
 
