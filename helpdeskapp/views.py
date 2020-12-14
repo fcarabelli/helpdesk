@@ -63,6 +63,6 @@ def send_html_message(request):
         subject = request.POST['subject']
         body = request.POST['message']
     mail_body = render_to_string('helpdeskapp/mail.html',{'subject': subject, 'body': body, 'mail_to': mail_to, 'request_datetime': datetime.now().isoformat()})
-    msg = EmailMessage('NO RESPONDER - Consulta Mesa de Ayuda FRM UTN :' + subject, mail_body, EMAIL_HOST_USER, [mail_to])
+    msg = EmailMessage('NO RESPONDER - Consulta N°: id ' + subject, mail_body,'Sistema de Mesa de Ayuda FRM UTN', [mail_to])
     msg.content_subtype = "html"
     return msg.send()
