@@ -27,5 +27,3 @@ class AuthQuestionForm(ModelForm):
             'message': 'Mensaje',
         }
 
-QuestionFormSet = modelformset_factory(model = Question,form= QuestionForm, fields = ('email','phone_number','subject','message'))
-AuthQuestionFormSet = modelformset_factory(model = Question,form= QuestionForm, fields = ('subject','message'))
