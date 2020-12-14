@@ -35,9 +35,9 @@ def addQuestion(request):
             # We can save it whenever we want
             instancia.save()
 
-            question_number = str(instancia.id)
+            question_object = { "number" : instancia.id, "datetime" : instancia.question_datetime }
 
-            print(send_html_message(request,question_number))
+            print(send_html_message(request, question_object))
             # After saving we redirect to the list
             return redirect('/')
 
@@ -56,16 +56,18 @@ def send_simple_message(request):
         body = request.POST['message']
     return send_mail(subject, body, EMAIL_HOST_USER, [mail_to])
 
-def send_html_message(request, question_number):
+def send_html_message(request, question_object):
     if request.user.is_anonymous:
         mail_to = request.POST['email']
         subject = request.POST['subject']
-        body = request.POST['message']
     else:
         mail_to = request.user.email
         subject = request.POST['subject']
-        body = request.POST['message']
-    mail_body = render_to_string('helpdeskapp/mail.html',{'subject': subject, 'body': body, 'mail_to': mail_to, 'request_datetime': datetime.now().isoformat(), 'question_number':question_number })
+    body = request.POST['message']
+    question_number = str(question_object['number'])
+    question_datetime = str(question_object['datetime'])
+
+    mail_body = render_to_string('helpdeskapp/mail.html',{'subject': subject, 'body': body, 'mail_to': mail_to, 'request_datetime': question_datetime, 'question_number': question_number })
     msg = EmailMessage('NO RESPONDER - Consulta N°: ' + question_number + ' - ' +  subject, mail_body,'Sistema de Mesa de Ayuda FRM UTN', [mail_to])
     msg.content_subtype = "html"
     return msg.send()
