@@ -2,7 +2,7 @@ from datetime import datetime
 
 
 from django.shortcuts import render, redirect
-
+from django.template.loader import render_to_string
 
 from helpdesk.settings import EMAIL_HOST_USER
 from helpdeskapp.forms import QuestionForm, AuthQuestionForm
@@ -62,7 +62,7 @@ def send_html_message(request):
         mail_to = request.user.email
         subject = request.POST['subject']
         body = request.POST['message']
-    body = f'<body><h1>Sistema de mesa de ayuda FRM UTN</h1><br><h2>Su consulta está siendo procesada</h2><h3> Datos de la solicitud</h3><br><p>Solicitante: {mail_to}</p><br><p>{subject}</p><br><p>Consulta realizada: {body}</p><br><p>Fecha y Hora de la solicitud:{datetime.now().isoformat()}</p></body>'
-    msg = EmailMessage(subject, body, EMAIL_HOST_USER, [mail_to])
+    mail_body = render_to_string('helpdeskapp/mail.html',{'subject': subject, 'body': body, 'mail_to': mail_to, 'request_datetime': datetime.now().isoformat()})
+    msg = EmailMessage(subject, mail_body, EMAIL_HOST_USER, [mail_to])
     msg.content_subtype = "html"
     return msg.send()
