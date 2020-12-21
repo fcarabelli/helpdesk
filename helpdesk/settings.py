@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'session',
     'bootstrap4',
     'captcha',
+    'django_q'
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
@@ -150,5 +151,20 @@ EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 
 
-
+Q_CLUSTER = {
+    'name': 'django_q_django',
+    'workers': 8,
+    'recycle': 500,
+    'timeout': 60,
+    'compress': True,
+    'save_limit': 250,
+    'queue_limit': 500,
+    'cpu_affinity': 1,
+    'label': 'Django Q',
+    'redis': {
+        'host': '172.22.0.100',
+        'port': 6379,
+        'password': '',
+        'db': 0, }
+}
 

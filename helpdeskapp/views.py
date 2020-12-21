@@ -1,12 +1,13 @@
-from datetime import datetime
-
 
 from django.shortcuts import render, redirect
-from django.template.loader import render_to_string
+
 
 from helpdesk.settings import EMAIL_HOST_USER
 from helpdeskapp.forms import QuestionForm, AuthQuestionForm
 from django.core.mail import send_mail, EmailMessage
+
+from django_q.tasks import async_task
+from time import sleep
 
 
 def addQuestion(request):
@@ -34,35 +35,14 @@ def addQuestion(request):
 
             # We can save it whenever we want
             instancia.save()
-            print(send_html_message(request))
+
+            # creating asynchronous email sending
+
+            async_task("helpdeskapp.tasks.send_async_html_message", instancia.id, timeout=120)
+
             # After saving we redirect to the list
             return redirect('/')
 
     # If we reach the end we render the form
     return render(request, "helpdeskapp/addQuestion.html", {'form': form})
 
-
-def send_simple_message(request):
-    if request.user.is_anonymous:
-        mail_to = request.POST['email']
-        subject = request.POST['subject']
-        body = request.POST['message']
-    else:
-        mail_to = request.user.email
-        subject = request.POST['subject']
-        body = request.POST['message']
-    return send_mail(subject, body, EMAIL_HOST_USER, [mail_to])
-
-def send_html_message(request):
-    if request.user.is_anonymous:
-        mail_to = request.POST['email']
-        subject = request.POST['subject']
-        body = request.POST['message']
-    else:
-        mail_to = request.user.email
-        subject = request.POST['subject']
-        body = request.POST['message']
-    mail_body = render_to_string('helpdeskapp/mail.html',{'subject': subject, 'body': body, 'mail_to': mail_to, 'request_datetime': datetime.now().isoformat()})
-    msg = EmailMessage('NO RESPONDER - Consulta N°: id ' + subject, mail_body,'Sistema de Mesa de Ayuda FRM UTN', [mail_to])
-    msg.content_subtype = "html"
-    return msg.send()
