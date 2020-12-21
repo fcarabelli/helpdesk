@@ -1,5 +1,3 @@
-from datetime import datetime
-
 
 from django.shortcuts import render, redirect
 
@@ -38,10 +36,10 @@ def addQuestion(request):
             # We can save it whenever we want
             instancia.save()
 
-            question_fields = { "number" : instancia.id, "datetime" : instancia.question_datetime }
+            # creating asynchronous email sending
 
             async_task("helpdeskapp.tasks.send_async_html_message", instancia.id, timeout=120)
-            # print(send_html_message(request, question_fields))
+
             # After saving we redirect to the list
             return redirect('/')
 
