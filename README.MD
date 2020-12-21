@@ -59,7 +59,17 @@ manage.py migrate
 ```bash
 manage.py runserver
 ```
-##
+
+### Django Q
+```bash
+python manage.py clusterq
+
+python manage.py migrate
+
+python manage.py runserver
+
+
+
 
 ##Application Components
 
