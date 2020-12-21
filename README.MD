@@ -60,6 +60,9 @@ manage.py migrate
 manage.py runserver
 ```
 
+##Prerequisites and Dependencies
+
+
 ### Django Q
 ```bash
 python manage.py clusterq
@@ -67,11 +70,11 @@ python manage.py clusterq
 python manage.py migrate
 
 python manage.py runserver
+```
 
 
 
-
-##Application Components
+## Application Components
 
 There are 2 apps actually:
 
@@ -79,12 +82,15 @@ There are 2 apps actually:
 
 * session
 
+
+
+
 ###Helpdeskapp
 
 This application registers the questions of the users.
 Questions are made through the AddQuestion form.
 
-###
+
 
 ###Session
 
