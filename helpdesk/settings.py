@@ -55,10 +55,26 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'session.session_middleware.AutoLogout',
 ]
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': 'redis://192.168.0.153:6379/1',
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+        }
+    }
+}
+SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
 AUTH_USER_MODEL = 'session.User'
 
 ROOT_URLCONF = 'helpdesk.urls'
+
+MIDDLEWARE_CLASSES = [
+    'session.session_middleware.AutoLogout'
+]
 
 TEMPLATES = [
     {
@@ -110,8 +126,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 AUTHENTICATION_BACKENDS = [
-    'django.contrib.auth.backends.ModelBackend',
-    'session.backends.UserEmailModelBackend',
+    'session.CustomSessionLogin.UTNAuth.UTNAuth',
 ]
 
 # Internationalization
@@ -127,6 +142,17 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
+
+UTN_CONFIG = {
+            'user': os.environ.get('UTN_DB_USER',),
+            'password': os.environ.get('UTN_DB_PASSWORD',),
+            'host': os.environ.get('UTN_DB_HOST',),
+            'database': os.environ.get('UTN_DB_DATABASE',),
+            'raise_on_warnings': True
+        }
+SESSION_TIME_MINUTES = os.environ.get('SESSION_TIME_MINUTES', 5)
+
+REDIS_HOST = os.environ.get('REDIS_HOST',)
+REDIS_PORT = os.environ.get('REDIS_PORT',)

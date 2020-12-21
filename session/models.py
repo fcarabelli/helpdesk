@@ -10,7 +10,7 @@ class User(AbstractUser):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name', 'last_name']
 
-    def create_user(self, email, first_name, last_name, password):
+    def create_user(self, email, first_name, last_name, password, cellphone):
         """
         Create institutional user
         """
@@ -22,9 +22,8 @@ class User(AbstractUser):
             raise ValueError("You must add your last name")
         if not password:
             raise ValueError("You need a password")
-        user = self.create_user(email, first_name, last_name)
+        user = self.create_user(email, first_name, last_name, cellphone)
         user.set_password(password)
-        user.save(self._db)
 
     def __str__(self):
         return self.email

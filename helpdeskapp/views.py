@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 
 from helpdeskapp.forms import QuestionForm
-
+from django.core.mail import send_mail
 
 def addQuestion(request):
     # We create an empty form
@@ -19,7 +19,8 @@ def addQuestion(request):
             # We can save it whenever we want
             instancia.save()
             # After saving we redirect to the list
-            return redirect('/')
+            send_mail('asunto', 'mensaje', 'fedegallar2006@hotmail.com', ['fedegallar2006@gmail.com'], fail_silently=False)
+            return redirect('addQuestion')
 
     # If we reach the end we render the form
     return render(request, "helpdeskapp/addQuestion.html", {'form': form})
