@@ -12,8 +12,7 @@ docker-compose exec web python manage.py migrate
 docker-compose exec web python manage.py createsuperuser
 
 
-<<<<<<< HEAD
-=======
+
 ### Upgrade pip and create virtual enviroment
 ```bash
 pip3 install -U pip
