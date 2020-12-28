@@ -8,6 +8,8 @@ from helpdesk.settings import EMAIL_HOST_USER
 from helpdeskapp.forms import QuestionForm, AuthQuestionForm
 from django.core.mail import send_mail, EmailMessage
 
+from helpdeskapp.tasks import send_async_html_message
+
 
 def addQuestion(request):
     # We create an empty form
@@ -35,9 +37,7 @@ def addQuestion(request):
             # We can save it whenever we want
             instancia.save()
 
-            question_fields = { "number" : instancia.id, "datetime" : instancia.question_datetime }
-
-            print(send_html_message(request, question_fields))
+            send_async_html_message.delay(instancia.id)
             # After saving we redirect to the list
             return redirect('/')
 
