@@ -1,97 +1,41 @@
-# Helpdesk
+# Helpdesk #
 
 
 Application developed in django to record and answer user queries
 
-##Prerequisites and Dependencies
+## Prerequisites and Dependencies ##
 
 * Python3 https://docs.python.org/3/
 * Django https://www.djangoproject.com/
 * Django Simple Captcha https://django-simple-captcha.readthedocs.io/
 * Django Bootstrap 4 https://django-bootstrap4.readthedocs.io/en/latest/
-##
+* Celery https://docs.celeryproject.org/en/stable/
+* Redis https://pypi.org/project/redis/
 
-## Installation Steps
 
-### Clone the repo
+## Installation Steps ##
+
+1.  Create redis container
 ```bash
-git clone https://github.com/fcarabelli/helpdesk
-```
-###
+sudo docker run --name redis -p 6379:6379 redis:latest
+``` 
 
-### Upgrade pip and create virtual enviroment
+2.  Install celery and redis dependencies
 ```bash
-pip3 install -U pip
-
-pip3 install virtualenv
-
-virtualenv --help
-
-virtualenv venv . 
-
-venv\Scripts\activate
-
-pip3 install -U pip
-
+sudo venv/bin/activate
+pip install celery[redis]
 ```
 
-###
-
-
-### Install dependencies
-
+3. Run django
 ```bash
-pip3 install -r requirements.txt
-```
-###
-
-### Make migrations
-```bash
-manage.py makemigrations
+python manage.py migrate
+python manage.py runserver
 ```
 
-### Migrate
+
+4. Run worker at terminal
 ```bash
-manage.py migrate
+celery -A helpdesk worker -l INFO
 ```
 
-### Run the server
-```bash
-manage.py runserver
-```
-##
 
-##Application Components
-
-There are 2 apps actually:
-
-* helpdeskapp
-
-* session
-
-###Helpdeskapp
-
-This application registers the questions of the users.
-Questions are made through the AddQuestion form.
-
-###
-
-###Session
-
-It is responsible for recording the activity of authenticated users
-
-###
-
-##
-
-## Usage
-
-
-##
-
-## Contributing
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
-
-Please make sure to update tests as appropriate.
-
-## License
