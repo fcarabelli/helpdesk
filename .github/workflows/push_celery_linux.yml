@@ -24,6 +24,7 @@ jobs:
           mkdir $foldername && cd $foldername
           github_url="https://github.com/${{ github.repository }}"
           git clone $github_url
+          cd helpdesk
           git checkout -b celery_linux
           git pull
           cd helpdesk
