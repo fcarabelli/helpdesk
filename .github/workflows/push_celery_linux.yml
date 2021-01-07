@@ -7,3 +7,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Build the stack
         run: docker-compose up -d
+      - name: Migrate changes
+        run: sudo docker-compose exec web python manage.py migrate
+      - name: Run tasks queue
+        run: sudo docker-compose exec web celery -A helpdesk worker -l INFO
