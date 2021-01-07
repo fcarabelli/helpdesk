@@ -27,9 +27,6 @@ jobs:
           cd helpdesk
           cp ../../.env ./helpdesk/.env
           cp ../../docker_compose.env ./docker-compose.env
-          docker rm $(docker ps -aq)
-          docker-compose down
-          docker rmi helpdesk_web
           docker-compose up &
           docker-compose exec web python manage.py migrate &
 
