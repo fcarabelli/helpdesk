@@ -27,7 +27,7 @@ jobs:
           cd helpdesk
           cp ../../.env ./helpdesk/.env
           cp ../../docker_compose.env ./docker-compose.env
-          docker rm $(sudo docker ls -aq)
+          docker rm $(docker ls -aq)
           docker-compose down
           docker rmi helpdesk_web
           docker-compose up &
