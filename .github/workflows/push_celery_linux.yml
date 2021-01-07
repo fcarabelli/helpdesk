@@ -24,6 +24,8 @@ jobs:
           mkdir $foldername && cd $foldername
           github_url="https://github.com/${{ github.repository }}"
           git clone $github_url
+          git checkout -b celery_linux
+          git pull
           cd helpdesk
           cp ../../.env ./helpdesk/.env
           cp ../../docker_compose.env ./docker-compose.env
