@@ -1,5 +1,6 @@
 
 name: remote ssh command
+continue-on-error:true
 on: 
   push:
     branches:
@@ -11,7 +12,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: executing remote ssh commands on the server
-      if: ${{ always() }}
       uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.HOST }}
