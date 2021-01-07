@@ -28,8 +28,8 @@ jobs:
           git checkout -b celery_linux
           git pull origin celery_linux
           cd helpdesk
-          cp ../../../.env ./helpdesk/.env
-          cp ../../../docker_compose.env ./docker-compose.env
+          cp ~/pruebas_github_actions/.env  ./helpdesk/.env
+          cp ~/pruebas_github_actions/docker-compose.env ./docker-compose.env
           docker-compose up &
           docker-compose exec web python manage.py migrate &
 
