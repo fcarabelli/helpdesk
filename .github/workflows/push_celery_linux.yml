@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: executing remote ssh commands on the server
-
+      if: ${{ always() }}
       uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.HOST }}
@@ -32,5 +32,7 @@ jobs:
           docker rmi helpdesk_web
           docker-compose up &
           docker-compose exec web python manage.py migrate &
+
+
 
           
