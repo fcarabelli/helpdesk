@@ -1,6 +1,6 @@
 
 name: remote ssh command
-continue-on-error:true
+continue-on-error: true
 on: 
   push:
     branches:
