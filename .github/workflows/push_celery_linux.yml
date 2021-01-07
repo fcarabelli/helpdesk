@@ -1,6 +1,5 @@
 
 name: remote ssh command
-continue-on-error: true
 on: 
   push:
     branches:
@@ -13,6 +12,7 @@ jobs:
     steps:
     - name: executing remote ssh commands on the server
       uses: appleboy/ssh-action@master
+      continue-on-error: true
       with:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
