@@ -9,6 +9,7 @@ services:
       - "5432:5432"
     networks:
       service1_net:
+        ipv4_address: 172.22.0.101
 
   redis:
     image: bitnami/redis:latest
