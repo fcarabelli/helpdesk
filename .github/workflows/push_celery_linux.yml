@@ -30,7 +30,7 @@ jobs:
           cp ~/pruebas_github_actions/.env  ./helpdesk/.env
           cp ~/pruebas_github_actions/docker_compose.env ./docker_compose.env
           docker-compose up -d
-          docker-compose exec web python manage.py runserver 0.0.0.0:8000
+          docker-compose exec web python manage.py migrate
 
 
 
