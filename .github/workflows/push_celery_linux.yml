@@ -26,7 +26,7 @@ jobs:
           git clone $github_url
           cd helpdesk
           git checkout -b celery_linux
-          git pull
+          git pull origin celery_linux
           cd helpdesk
           cp ../../.env ./helpdesk/.env
           cp ../../docker_compose.env ./docker-compose.env
