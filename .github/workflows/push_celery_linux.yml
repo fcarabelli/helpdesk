@@ -29,13 +29,8 @@ jobs:
           git pull origin celery_linux
           cp ~/pruebas_github_actions/.env  ./helpdesk/.env
           cp ~/pruebas_github_actions/docker_compose.env ./docker_compose.env
-          docker-compose up
-
-  migrate:
-    name: Migrate
-    runs-on: ubuntu-latest
-    steps:
-    - name: migrate django changes
+          docker-compose up -d
+    - name: Migrate changes on django
       uses: appleboy/ssh-action@master
       continue-on-error: true
       with:
@@ -45,5 +40,6 @@ jobs:
         port: ${{ secrets.PORT }}
         script: |
           cd pruebas_github_actions/helpdesk-${{ github.run_number }}/helpdesk
-          docker-compose exec web python manage.py migrate
+          docker-compose exec web python manage.py runserver 0.0.0.0:8000
+
           

@@ -17,7 +17,7 @@ services:
 
   web:
     build: .
-    command: sh -c "/wait && python manage.py runserver 0.0.0.0:8000"
+    command: sh -c "/wait && python manage.py migrate"
     ports:
       - "8000:8000"
     depends_on:
