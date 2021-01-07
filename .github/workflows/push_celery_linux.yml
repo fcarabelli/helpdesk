@@ -19,15 +19,15 @@ jobs:
         key: ${{ secrets.KEY }}
         port: ${{ secrets.PORT }}
         script: |
-          cd pruebas_github_actions
+          sudo cd pruebas_github_actions
           foldername="helpdesk-${{ github.run_number }}"
-          mkdir $foldername && cd $foldername
+          sudo mkdir $foldername && cd $foldername
           github_url="https://github.com/${{ github.repository }}"
-          git clone $github_url
-          cd helpdesk
-          cp ../../.env ./helpdesk/.env
-          cp ../../docker_compose.env ./docker-compose.env
-          sudo docker rm $(docker ls -aq)
+          sudo git clone $github_url
+          sudo cd helpdesk
+          sudo cp ../../.env ./helpdesk/.env
+          sudo cp ../../docker_compose.env ./docker-compose.env
+          sudo docker rm $(sudo docker ls -aq)
           sudo docker-compose down
           sudo docker rmi helpdesk_web
           sudo docker-compose up &
