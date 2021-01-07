@@ -7,4 +7,5 @@ db.sqlite3
 /venv
 /.idea
 /helpdesk/.env
-.env
+*.env
+
