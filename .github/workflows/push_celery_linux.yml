@@ -51,7 +51,7 @@ jobs:
         port: ${{ secrets.PORT }}
         script: |
           cd pruebas_github_actions/helpdesk-${{ github.run_number }}/helpdesk
-          docker-compose exec web celery -A helpdesk worker -l INFO
+          docker-compose exec -T web celery -A helpdesk worker -l INFO
 
 
           
