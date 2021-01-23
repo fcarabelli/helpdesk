@@ -17,10 +17,10 @@ class UTNAuth:
         try:
             db = mysql.connector.connect(**settings.UTN_CONFIG)
             cursor = db.cursor()
-            query = "SELECT id,username,phone,password2 FROM utn_development.mailbox WHERE username=%s AND password2=%s;"
-            cursor.execute(query, (username, hashed_pass))
+            query = "SELECT goto, username, password2 FROM %s WHERE username=%s AND password2=%s;"
+            cursor.execute(query, (settings.UTN_DB_TABLE, username, hashed_pass))
             user = cursor.fetchone()
-            usr = User(email=user[1], first_name="Federico", last_name="Gallardo", password=user[3], is_staff=True, is_active=True, date_joined=None, is_superuser=True, last_login=None, cellphone=2616922360)
+            usr = User(email=user[0], first_name=user[1], last_name="", password=user[2], is_staff=True, is_active=True, date_joined=None, is_superuser=True, last_login=None, cellphone=None)
             usr.pk = user[0]
             encoded_email = create_session(usr)
             request.session['current_user_session'] = encoded_email
@@ -37,20 +37,20 @@ class UTNAuth:
         try:
             db = mysql.connector.connect(**settings.UTN_CONFIG)
             cursor = db.cursor()
-            query = "SELECT id, username, phone, password2 FROM utn_development.mailbox WHERE id=%s;"
+            query = "SELECT goto, username, password2 FROM utn_development.mailbox WHERE id=%s;"
             cursor.execute(query, (str(user_id)))
             user = cursor.fetchone()
             usuario = User(
-                           email=user[1],
-                           first_name="Federico",
-                           last_name="Gallardo",
+                           email=user[0],
+                           first_name=user[1],
+                           last_name="",
                            password=user[2],
                            is_staff=True,
                            is_active=True,
                            date_joined=None,
                            is_superuser=True,
                            last_login=None,
-                           cellphone=2616922360)
+                           cellphone=None)
             usuario._meta.pk = user[0]
             cursor.close()
             db.close()

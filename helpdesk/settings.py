@@ -152,6 +152,7 @@ UTN_CONFIG = {
             'database': os.environ.get('UTN_DB_DATABASE',),
             'raise_on_warnings': True
         }
+UTN_DB_TABLE = os.environ.get('UTN_DB_TABLE',)
 SESSION_TIME_MINUTES = os.environ.get('SESSION_TIME_MINUTES', 5)
 
 REDIS_HOST = os.environ.get('REDIS_HOST',)
