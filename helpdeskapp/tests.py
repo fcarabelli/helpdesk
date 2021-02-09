@@ -7,7 +7,7 @@ from helpdeskapp.models import Question
 
 class QuestionTestCase(TestCase):
     def setUp(self):
-        Question.objects.create(subject="Esto es una prueba",message="Esto es una prueba",urgency="HIGH")
+        Question.objects.create(subject="Esto es una prueba",message="Esto es una prueba")
 
     def test_question_recently_created(self):
         recent_creation = Question.objects.get(subject="Esto es una prueba")
