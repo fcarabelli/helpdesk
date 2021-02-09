@@ -1,13 +1,11 @@
+{% extends 'session/base.html' %}
 {% load bootstrap4 %}
-
-{% bootstrap_css %}
-{% bootstrap_javascript jquery='full' %}
-
-<form method="POST">
-
-    {% csrf_token %}
-    {% bootstrap_form form %}
-    {% buttons %}
-    <button type="submit">Crear</button>
-    {% endbuttons %}
-</form>
+{% block content %}
+    <form method="POST">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        {% buttons %}
+            <button type="submit">Crear</button>
+        {% endbuttons %}
+    </form>
+{% endblock %}

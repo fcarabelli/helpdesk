@@ -1,0 +1,57 @@
+
+name: remote ssh command
+on: 
+  push:
+    branches:
+      - celery_linux
+jobs:
+
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+    - name: executing remote ssh commands on the server
+      uses: appleboy/ssh-action@master
+      continue-on-error: true
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.KEY }}
+        port: ${{ secrets.PORT }}
+        script: |
+          cd pruebas_github_actions
+          foldername="helpdesk-${{ github.run_number }}"
+          mkdir $foldername && cd $foldername
+          github_url="https://github.com/${{ github.repository }}"
+          git clone $github_url
+          cd helpdesk
+          git checkout -b celery_linux
+          git pull origin celery_linux
+          cp ~/pruebas_github_actions/.env  ./helpdesk/.env
+          cp ~/pruebas_github_actions/docker_compose.env ./docker_compose.env
+          docker-compose up -d
+    - name: Migrate changes on django
+      uses: appleboy/ssh-action@master
+      continue-on-error: true
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.KEY }}
+        port: ${{ secrets.PORT }}
+        script: |
+          cd pruebas_github_actions/helpdesk-${{ github.run_number }}/helpdesk
+          docker-compose exec -T web python manage.py migrate
+    - name: Create celery queue
+      uses: appleboy/ssh-action@master
+      continue-on-error: true
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.KEY }}
+        port: ${{ secrets.PORT }}
+        script: |
+          cd pruebas_github_actions/helpdesk-${{ github.run_number }}/helpdesk
+          docker-compose exec -T web celery -A helpdesk worker -l INFO
+
+
+          
