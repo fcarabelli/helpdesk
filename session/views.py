@@ -1,8 +1,9 @@
 from django.shortcuts import redirect
 from django.views import generic
 from .forms import LoginForm
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate
 from django.contrib import messages
+from .CustomSessionLogin.Session import destroy_session as DestroySession, user_authenticated as UserAuthenticated
 
 
 class LoginView(generic.FormView):
@@ -15,7 +16,6 @@ class LoginView(generic.FormView):
         password = form.cleaned_data.get('password')
         user = authenticate(self.request, username=email, password=password)
         if user is not None:
-            login(self.request, user)
             return super(LoginView, self).form_valid(form)
         else:
             messages.error(self.request, 'Revisar correo institucional y/o contraseña.')
@@ -30,7 +30,9 @@ def destroy_session(request):
     """
     Cerrar sesión.
     """
-    logout(request)
+    DestroySession(request.session['current_user_session'])
+    del request.session['current_user_session']
+    del request.session['current_user']
     return redirect('login')
 
 
