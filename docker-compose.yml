@@ -15,6 +15,20 @@ services:
     ports:
       - "6379:6379"
 
+  mysql:
+    image: mysql:latest
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=utn_development
+          # So you don't have to use root, but you can if you like
+      - MYSQL_USER=user
+          # You can use whatever password you like
+      - MYSQL_PASSWORD=password
+    volumes:
+      - ./backup.sql:/docker-entrypoint-initdb.d/dump.sql
+    ports:
+      - "3306:3306"
+
   web:
     build: .
     command: sh -c "/wait && python manage.py runserver 0.0.0.0:8000"
@@ -22,7 +36,9 @@ services:
       - "8000:8000"
     depends_on:
       - db
+      - mysql
       - redis
     environment:
-      WAIT_HOSTS: db:5432, redis:6379
+      WAIT_HOSTS: db:5432, redis:6379, mysql:3306
+      WAIT_HOSTS_TIMEOUT: 200
 

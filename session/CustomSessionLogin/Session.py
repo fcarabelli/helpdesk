@@ -9,6 +9,7 @@ def create_session(user):
     r = redis.Redis(
         host=settings.REDIS_HOST,
         port=settings.REDIS_PORT,
+        db=settings.REDIS_DB,
     )
     user_json = serializers.serialize('json', [user])
     base64_email = base64.b64encode(bytes(user.email, 'utf-8'))
@@ -20,6 +21,7 @@ def destroy_session(base64_email):
     r = redis.Redis(
         host=settings.REDIS_HOST,
         port=settings.REDIS_PORT,
+        db=settings.REDIS_DB,
     )
     r.delete(str(base64_email))
 
@@ -28,6 +30,7 @@ def user_authenticated(email):
     r = redis.Redis(
         host=settings.REDIS_HOST,
         port=settings.REDIS_PORT,
+        db=settings.REDIS_DB,
     )
     user = r.get(email)
     for obj in serializers.deserialize("json", user):
