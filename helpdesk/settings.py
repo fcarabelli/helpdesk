@@ -45,9 +45,6 @@ INSTALLED_APPS = [
     'session',
     'bootstrap4',
     'captcha',
-    'django.contrib.admin',
-    'django.contrib.aut',
-
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
