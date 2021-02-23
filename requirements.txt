@@ -6,3 +6,5 @@ Pillow==8.0.0
 pytz==2020.1
 six==1.15.0
 sqlparse==0.4.1
+redis~=3.5.3
+mysql-connector-python~=8.0.22
