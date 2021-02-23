@@ -17,11 +17,11 @@ class UTNAuth:
         try:
             db = mysql.connector.connect(**settings.UTN_CONFIG)
             cursor = db.cursor()
-            query = "SELECT goto, username, password2 FROM %s WHERE username=%s AND password2=%s;"
-            cursor.execute(query, (settings.UTN_DB_TABLE, username, hashed_pass))
+            query = 'SELECT goto, username, password2 FROM mailbox WHERE goto=%s AND password2=%s;'
+            cursor.execute(query, (username, hashed_pass))
             user = cursor.fetchone()
             usr = User(email=user[0], first_name=user[1], last_name="", password=user[2], is_staff=True, is_active=True, date_joined=None, is_superuser=True, last_login=None, cellphone=None)
-            usr.pk = user[0]
+            usr.pk = 0
             encoded_email = create_session(usr)
             request.session['current_user_session'] = encoded_email
             request.session['current_user'] = usr

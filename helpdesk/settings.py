@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
-
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 from django.template.context_processors import static
 
@@ -57,16 +56,6 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'session.session_middleware.AutoLogout',
 ]
-
-CACHES = {
-    'default': {
-        'BACKEND': 'django_redis.cache.RedisCache',
-        'LOCATION': 'redis://192.168.0.153:6379/1',
-        'OPTIONS': {
-            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
-        }
-    }
-}
 SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
 AUTH_USER_MODEL = 'session.User'
 
@@ -146,14 +135,23 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 UTN_CONFIG = {
-            'user': os.environ.get('UTN_DB_USER',),
+            'user': os.environ.get('UTN_DB_USER', ''),
             'password': os.environ.get('UTN_DB_PASSWORD',),
-            'host': os.environ.get('UTN_DB_HOST',),
-            'database': os.environ.get('UTN_DB_DATABASE',),
+            'host': os.environ.get('UTN_DB_HOST', ''),
+            'database': os.environ.get('UTN_DB_DATABASE', ''),
             'raise_on_warnings': True
         }
-UTN_DB_TABLE = os.environ.get('UTN_DB_TABLE',)
 SESSION_TIME_MINUTES = os.environ.get('SESSION_TIME_MINUTES', 5)
 
-REDIS_HOST = os.environ.get('REDIS_HOST',)
-REDIS_PORT = os.environ.get('REDIS_PORT',)
+REDIS_HOST = os.environ.get('REDIS_HOST', '')
+REDIS_PORT = os.environ.get('REDIS_PORT', '')
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': 'redis://'+REDIS_HOST+'/1',
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+        }
+    }
+}
