@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'helpdeskapp.apps.HelpdeskappConfig',
-    'session',
+    'core',
     'bootstrap4',
     'captcha',
 ]
@@ -57,20 +57,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'session.session_middleware.AutoLogout',
+
 ]
 
-CACHES = {
-    'default': {
-        'BACKEND': 'django_redis.cache.RedisCache',
-        'LOCATION': config('REDIS_CACHE'),
-        'OPTIONS': {
-            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
-        }
-    }
-}
-SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
-AUTH_USER_MODEL = 'session.User'
 
 ROOT_URLCONF = 'helpdesk.urls'
 
