@@ -13,7 +13,7 @@ def create_session(user):
     )
     user_json = serializers.serialize('json', [user])
     base64_email = base64.b64encode(bytes(user.email, 'utf-8'))
-    r.setex(base64_email, timedelta(minutes=settings.SESSION_TIME_MINUTES), value=user_json)
+    r.setex(base64_email, timedelta(minutes=float(settings.SESSION_TIME_MINUTES)), value=user_json)
     return base64_email
 
 

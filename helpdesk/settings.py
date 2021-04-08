@@ -19,18 +19,16 @@ from decouple import config
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config("SECRET_KEY")
+SECRET_KEY = 'p0h8)&9tyhy5ggd=dp7=w7piowaykvf+3#ukudox1q$bq2g8$e'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['0.0.0.0',]
-
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -60,22 +58,14 @@ MIDDLEWARE = [
     'session.session_middleware.AutoLogout',
 ]
 
-CACHES = {
-    'default': {
-        'BACKEND': 'django_redis.cache.RedisCache',
-        'LOCATION': config('REDIS_CACHE'),
-        'OPTIONS': {
-            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
-        }
-    }
-}
 SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
+
 AUTH_USER_MODEL = 'session.User'
 
 ROOT_URLCONF = 'helpdesk.urls'
 
 MIDDLEWARE_CLASSES = [
-    'session.session_middleware.AutoLogout'
+    'django.contrib.sessions.middleware.SessionMiddleware',
 ]
 
 TEMPLATES = [
@@ -96,7 +86,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'helpdesk.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
@@ -108,9 +97,16 @@ DATABASES = {
         'PASSWORD': config('DB_PASSWORD'),
         'HOST': config('DB_HOST'),
         'PORT': config('DB_PORT'),
+    },
+    'users': {
+        'ENGINE': config('DB_USER_ENGINE'),
+        'NAME': config('DB_USER_NAME'),
+        'USER': config('DB_USER_USER'),
+        'PASSWORD': config('DB_USER_PASSWORD'),
+        'HOST': config('DB_USER_HOST'),
+        'PORT': config('DB_USER_PORT'),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -133,6 +129,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
     'session.CustomSessionLogin.UTNAuth.UTNAuth',
 ]
 
@@ -149,20 +146,17 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 UTN_CONFIG = {
-            'user': config('UTN_DB_USER'),
-            'password': config('UTN_DB_PASSWORD'),
-            'host': config('UTN_DB_HOST'),
-            'database': config('UTN_DB_DATABASE'),
-            'raise_on_warnings': True
-        }
-UTN_DB_TABLE = config('UTN_DB_TABLE',)
-SESSION_TIME_MINUTES = os.environ.get('SESSION_TIME_MINUTES', 5)
-
+    'user': config('UTN_DB_USER'),
+    'password': config('UTN_DB_PASSWORD'),
+    'host': config('UTN_DB_HOST'),
+    'database': config('UTN_DB_DATABASE'),
+    'raise_on_warnings': True
+}
+SESSION_TIME_MINUTES = config('SESSION_TIME_MINUTES')
 
 EMAIL_BACKEND = config('EMAIL_BACKEND')
 EMAIL_HOST = config('EMAIL_HOST')
@@ -172,7 +166,6 @@ EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 
 CELERY_BROKER_URL = config('CELERY_BROKER_URL')
-
 
 REDIS_HOST = config('REDIS_HOST')
 REDIS_PORT = config('REDIS_PORT')

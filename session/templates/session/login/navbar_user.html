@@ -7,16 +7,15 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-            {% if request.session.current_user is not None %}
+            {% if user.is_authenticated %}
                 <ul class="navbar-nav mr-auto">
                     <li><a class="nav-link" href="{% url 'addQuestion' %}">Formular pregunta</a></li>
                 </ul>
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item"><h5 style="color: white">{{ request.session.current_user.first_name}}!</h5></li>
+                    <li class="nav-item"><h5 style="color: white">{{ user.first_name}}!</h5></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Cerrar sesión</a></li>
                 </ul>
             {% else %}
-                {{request.session.current_user}}
             <form method="post" class="form ml-auto">
                 {% csrf_token %}
                 <div class="form-row">
