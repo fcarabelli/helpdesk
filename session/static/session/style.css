@@ -7,6 +7,9 @@
     font-family: sans-serif;
     font-size: 22px;
 }
+header{
+    margin: auto;
+}
 nav{
     background-color: #2c3e50;
 }

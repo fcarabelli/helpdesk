@@ -17,9 +17,7 @@ def addQuestion(request):
         form = QuestionForm()
     else:
         form = AuthQuestionForm()
-    # We check if the form has been sent
     if request.method == "POST":
-        # Añadimos los datos recibidos al formulario
         if request.user.is_authenticated and request.user.is_active:
             form = AuthQuestionForm(data=request.POST)
         else:
