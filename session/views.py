@@ -13,7 +13,7 @@ class LoginView(generic.FormView):
     def form_valid(self, form):
         email = form.cleaned_data.get('user_email')
         password = form.cleaned_data.get('password')
-        user = authenticate(self.request, username=email, password=password)
+        user = authenticate()
         if user is not None:
             login(self.request, user)
             return redirect('addQuestion')

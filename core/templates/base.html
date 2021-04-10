@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+    <h1>My Site</h1>
+
+    <a href="/">Home</a>
+    <span>/</span>
+
+    {% if current_user %}
+        <a href="{% url 'logout' %}">Logout</a>
+        <hr>
+        <h2>Welcome <span style="color: dodgerblue;">{{current_user.first_name}} {{current_user.last_name}}  </span>!</h2>
+        <ul><h3>List of Questions</h3>
+            {%  for question in user_questions %}
+                <li>{{ question }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <a href="{% url 'login' %}">Login</a>
+        <span>/</span>
+        <hr>
+        <h2>Login to access this website! </h2>
+    {% endif %}
+
+
+    {% block body %}{% endblock %}
+</body>
+</html>
