@@ -55,7 +55,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'session.session_middleware.AutoLogout',
 ]
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
@@ -156,7 +155,6 @@ UTN_CONFIG = {
     'database': config('UTN_DB_DATABASE'),
     'raise_on_warnings': True
 }
-SESSION_TIME_MINUTES = config('SESSION_TIME_MINUTES')
 
 EMAIL_BACKEND = config('EMAIL_BACKEND')
 EMAIL_HOST = config('EMAIL_HOST')
