@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Mesa de Ayuda</title>
+        {% load static %}
+        <link rel="icon" href="{% static 'thumbnail.png' %}">
+        {% load bootstrap4 %}
+        {% bootstrap_css %}
+        {% bootstrap_javascript jquery='full' %}
+    </head>
+    <body>
+        <header>
+            {% block base_login %}
+                {% include 'session/login/navbar_user.html' %}
+            {% endblock %}
+        </header>
+        <div class="container">
+            {% block content %}{% endblock %}
+        </div>
+    </body>
+</html>
