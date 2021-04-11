@@ -111,6 +111,7 @@ DATABASES = {
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = ["./static"]
 
 AUTH_PASSWORD_VALIDATORS = [
     {

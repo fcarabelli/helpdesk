@@ -6,7 +6,6 @@ from time import sleep
 
 @shared_task
 def send_async_html_message(question_id):
-    sleep(100)
     question = Question.objects.get(pk=question_id)
     body = question.message
     subject = question.subject
