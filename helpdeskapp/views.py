@@ -1,6 +1,5 @@
 from datetime import datetime
 
-
 from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
 
@@ -43,6 +42,10 @@ def addQuestion(request):
     return render(request, "helpdeskapp/addQuestion.html", {'form': form})
 
 
+def index(request):
+    return render(request, "helpdeskapp/index.html")
+
+
 def send_simple_message(request):
     if request.user.is_anonymous:
         mail_to = request.POST['email']
@@ -53,6 +56,7 @@ def send_simple_message(request):
         subject = request.POST['subject']
         body = request.POST['message']
     return send_mail(subject, body, EMAIL_HOST_USER, [mail_to])
+
 
 def send_html_message(request, question_fields):
     if request.user.is_anonymous:
@@ -65,7 +69,10 @@ def send_html_message(request, question_fields):
     question_number = str(question_fields['number'])
     question_datetime = str(question_fields['datetime'])
 
-    mail_body = render_to_string('helpdeskapp/mail.html',{'subject': subject, 'body': body, 'mail_to': mail_to, 'request_datetime': question_datetime, 'question_number': question_number })
-    msg = EmailMessage('NO RESPONDER - Consulta N°: ' + question_number + ' - ' +  subject, mail_body,'Sistema de Mesa de Ayuda FRM UTN', [mail_to])
+    mail_body = render_to_string('helpdeskapp/mail.html', {'subject': subject, 'body': body, 'mail_to': mail_to,
+                                                           'request_datetime': question_datetime,
+                                                           'question_number': question_number})
+    msg = EmailMessage('NO RESPONDER - Consulta N°: ' + question_number + ' - ' + subject, mail_body,
+                       'Sistema de Mesa de Ayuda FRM UTN', [mail_to])
     msg.content_subtype = "html"
     return msg.send()
