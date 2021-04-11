@@ -1,0 +1,36 @@
+{% extends 'session/base.html' %}
+{% load bootstrap4 %}
+{% block content %}
+    <div class="row">
+        <div class="col">
+            <form method="post" class="form ml-auto" action="{% url 'login' %}">
+                {% csrf_token %}
+                <div class="form-row">
+                    {{ form.user_email }}
+                </div><br>
+                <div class="form-row">
+                    {{ form.password }}
+                </div><br>
+                <div class="form-row">
+                    <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+                </div><br>
+                <div class="form-row errorlist">
+                    {{ form.user_email.errors|striptags}}
+                    {% if messages %}
+                        {% for message in messages %}
+                            {{ message }}
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </form>
+        </div>
+        <div class="col">
+            <h5>El usuario tiene que ser un correo institucional:</h5>
+            <ul>
+                <li>@frm.utn.edu.ar</li>
+                <li>@alumnos.utn.edu.ar</li>
+                <li>@docentes.utn.edu.ar</li>
+            </ul>
+        </div>
+    </div>
+{% endblock %}
