@@ -28,10 +28,8 @@ class UTNAuth(object):
                     full_name = str.split(user[1])
                     first_name = full_name[0]
                     last_name = full_name[1]
-                    usr = User.objects.create_user(username=user[0], email=user[0], first_name=first_name,
-                                                   last_name=last_name, cellphone=0)
-                    usr.set_password(get_random_string().upper())
-                    usr.save()
+                    usr = User.objects.create_user(email=user[0], password=password, first_name=first_name,
+                                                   last_name=last_name)
                     return usr
             else:
                 return None
