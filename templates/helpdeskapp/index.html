@@ -1,26 +1,33 @@
 {% extends 'session/base.html' %}
 {% load bootstrap4 %}
 {% block content %}
-    <h1><ins>Mis Preguntas</ins></h1>
-        <br>
-        <table class="table table-responsive table-bordered">
-          <thead>
-            <tr>
-              <th scope="col">N°</th>
-              <th scope="col">Asunto</th>
-              <th scope="col">Descripcion</th>
-              <th scope="col">Fecha y hora</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for question in questions %}
-            <tr>
-              <th scope="row">{{ question.id }}</th>
-              <td>{{ question.subject }}</td>
-              <td>{{ question.message }}</td>
-              <td>{{ question.question_datetime }}</td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
+    {% if user.is_authenticated %}
+        {% if questions %}
+            <h1><ins>Mis Preguntas</ins></h1>
+                <br>
+                <table class="table table-responsive table-bordered">
+                  <thead>
+                    <tr>
+                      <th scope="col">N°</th>
+                      <th scope="col">Asunto</th>
+                      <th scope="col">Descripcion</th>
+                      <th scope="col">Fecha y hora</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for question in questions %}
+                    <tr>
+                      <th scope="row">{{ question.id }}</th>
+                      <td>{{ question.subject }}</td>
+                      <td>{{ question.message }}</td>
+                      <td>{{ question.question_datetime }}</td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+            {% endif %}
+    {% else %}
+        <p>Inicie <a  href="{% url 'login' %}">sesion</a> para ver su lista de preguntas</p>
+    {% endif %}
+
 {% endblock %}
