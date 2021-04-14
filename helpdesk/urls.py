@@ -16,8 +16,10 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from django.urls import path, include
+from helpdeskapp.views import welcome
 
 urlpatterns = [
+    path('', welcome),
     path('helpdeskapp/', include('helpdeskapp.urls'), name='helpdesk'),
     path('admin/', admin.site.urls),
     url(r'^captcha/', include('captcha.urls')),

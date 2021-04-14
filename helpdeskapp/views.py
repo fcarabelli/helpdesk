@@ -54,6 +54,9 @@ def index(request):
     }
     return render(request, "helpdeskapp/index.html", context)
 
+def welcome(request):
+    return render(request, "helpdeskapp/welcome.html")
+
 
 def send_simple_message(request):
     if request.user.is_anonymous:
