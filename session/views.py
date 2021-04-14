@@ -29,13 +29,13 @@ class IndexView(generic.TemplateView):
     template_name = 'session/base.html'
 
 
-    def destroy_session(request):
-        """
-        Cerrar sesión.
-        """
-        logout(request)
-        return redirect('login')
+def destroy_session(request):
+    """
+    Cerrar sesión.
+    """
+    logout(request)
+    return redirect('login')
 
 
-    def create_session(request):
-        return redirect('/admin/')
+def create_session(request):
+    return redirect('/admin/')
