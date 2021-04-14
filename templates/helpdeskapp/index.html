@@ -1,24 +1,26 @@
 {% extends 'session/base.html' %}
 {% load bootstrap4 %}
 {% block content %}
-    <h1>Inicio</h1>
-    {% if user.is_authenticated %}
+    <h1><ins>Consultas</ins></h1>
         <br>
-        <br>
-        {% if questions %}
-            <ul>
-                {% for question in questions %}
-                <li>
-                    <h4> Número de solicitud: {{ question.id }}</h4><br>
-                    <p>Solicitante: {{  user.email }}</p><br>
-                    <p>Asunto de la consulta: {{ question.subject }} </p><br>
-                    <p>Consulta realizada: {{ question.message }} </p><br>
-                    <p>Fecha y Hora de la solicitud: {{ question.question_datetime }}</p>
-                </li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <p><b>No hay consultas realizadas con tu mail institucional</b></p>
-        {% endif %}
-    {% endif %}
+        <table class="table table-responsive table-bordered">
+          <thead>
+            <tr>
+              <th scope="col">N°</th>
+              <th scope="col">Asunto</th>
+              <th scope="col">Descripcion</th>
+              <th scope="col">Fecha y hora</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for question in questions %}
+            <tr>
+              <th scope="row">{{ question.id }}</th>
+              <td>{{ question.subject }}</td>
+              <td>{{ question.message }}</td>
+              <td>{{ question.question_datetime }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
 {% endblock %}
