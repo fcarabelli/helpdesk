@@ -7,6 +7,7 @@ from helpdesk.settings import EMAIL_HOST_USER
 from helpdeskapp.forms import QuestionForm, AuthQuestionForm
 from django.core.mail import send_mail, EmailMessage
 
+from helpdeskapp.models import Question
 from helpdeskapp.tasks import send_async_html_message
 
 
@@ -43,7 +44,15 @@ def addQuestion(request):
 
 
 def index(request):
-    return render(request, "helpdeskapp/index.html")
+    if request.user.is_authenticated and request.user.is_active:
+        questions = Question.objects.filter(email=request.user.email)
+    else:
+        questions = ''
+
+    context = {
+        'questions': questions
+    }
+    return render(request, "helpdeskapp/index.html", context)
 
 
 def send_simple_message(request):
