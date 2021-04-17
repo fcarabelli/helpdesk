@@ -11,5 +11,3 @@ class Question(models.Model):
     email = models.EmailField(max_length=254, blank=False, help_text="Ingresá tu mail de uso frecuente")
     phone_regex = RegexValidator(regex=r'^\d{9,15}$', message="Se permiten entre 9 y 15 números")
     phone_number = models.CharField(blank=True, validators=[phone_regex], max_length=15) # validators should be a list
-
-
