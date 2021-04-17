@@ -1,9 +1,8 @@
 from django.shortcuts import redirect
 from django.views import generic
-from .forms import LoginForm, UserForm
+from .forms import LoginForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-from .models import User
 
 
 class LoginView(generic.FormView):
