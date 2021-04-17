@@ -9,15 +9,3 @@ class LoginForm(forms.Form):
     password = forms.CharField(
         widget=forms.PasswordInput(attrs={'class': 'form-control', 'id': 'password', 'placeholder': 'Contraseña'}),
         label='Contraseña')
-
-    def clean_user_email(self):
-        email = self.cleaned_data['user_email']
-        if search("@frm.utn.edu.ar", email):
-            return email
-        elif search("@docentes.frm.utn.edu.ar", email):
-            return email
-        elif search('@alumnos.frm.utn.edu.ar', email):
-            return email
-        else:
-            raise forms.ValidationError("Tiene que ser correo institucional")
-            return email
