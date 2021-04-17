@@ -1,8 +1,9 @@
 from django.shortcuts import redirect
 from django.views import generic
-from .forms import LoginForm
+from .forms import LoginForm, UserForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
+from .models import User
 
 
 class LoginView(generic.FormView):
@@ -19,6 +20,7 @@ class LoginView(generic.FormView):
             user = authenticate(self.request, username=email, password=password)
             if user is not None:
                 login(self.request, user)
+                self.request.session.set_expiry(300)
                 return redirect('helpdeskapp-index')
             else:
                 messages.error(self.request, 'Revisar correo institucional y/o contraseña.')
@@ -35,6 +37,3 @@ class IndexView(generic.TemplateView):
         logout(request)
         return redirect('login')
 
-
-    def create_session(request):
-        return redirect('/admin/')
