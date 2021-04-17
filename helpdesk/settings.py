@@ -63,10 +63,6 @@ AUTH_USER_MODEL = 'session.User'
 
 ROOT_URLCONF = 'helpdesk.urls'
 
-MIDDLEWARE_CLASSES = [
-    'django.contrib.sessions.middleware.SessionMiddleware',
-]
-
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -129,8 +125,8 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 AUTHENTICATION_BACKENDS = [
-    'django.contrib.auth.backends.ModelBackend',
     'session.CustomSessionLogin.UTNAuth.UTNAuth',
+    'django.contrib.auth.backends.ModelBackend',
 ]
 
 # Internationalization
