@@ -1,4 +1,6 @@
 from django.contrib.auth.base_user import BaseUserManager
+from django.contrib.auth.models import Group
+from re import search
 
 
 class CustomUserManager(BaseUserManager):
@@ -6,7 +8,15 @@ class CustomUserManager(BaseUserManager):
     def create_user(self, email, password, first_name, last_name, **extra_fields):
         user = self.model(username=email, email=email, first_name=first_name, last_name=last_name, **extra_fields)
         user.set_password(raw_password=password)
+        if search("@alumnos.frm.utn.edu.ar", email):
+            group = Group.objects.get(name="Alumno")
+        if search("@docentes.frm.utn.edu.ar", email):
+            group = Group.objects.get(name="Docente")
+        if search("@frm.utn.edu.ar", email):
+            group = Group.objects.get(name="No docente")
         user.save()
+        if group:
+            user.groups.add(group)
         return user
 
     def create_superuser(self, email, password, first_name, last_name, **extra_fields):
